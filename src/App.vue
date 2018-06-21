@@ -1,13 +1,22 @@
 <template>
   <div id="app">
-    <router-link to="/upload-form">Форма загрузки</router-link>
-    <router-link to="/photo-gallery">Галерея</router-link>
+    <!-- <router-link to="/upload-form">Форма загрузки</router-link>
+    <router-link to="/photo-gallery">Галерея</router-link> -->
     <router-view></router-view>
+    <UploadForm/>
+    <PhotoGallery/>
+    <PhotoModal/>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
+import UploadForm from "@/components/UploadForm";
+import PhotoGallery from "@/components/PhotoGallery";
+import PhotoModal from "@/components/PhotoModal";
+Vue.component("UploadForm", UploadForm);
+Vue.component("PhotoGallery", PhotoGallery);
+Vue.component("PhotoModal", PhotoModal);
 
 export default {
   name: "App"

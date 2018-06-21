@@ -1,7 +1,7 @@
 <template>
   <form action="" class="upload-form">
     <input type="file" id="upload-file" class="upload-form__input" name="filename" required="">
-    <label for="upload-file" class="upload-form__label" title="Click to download"><img src="@/assets/logo.png"></label>
+    <label for="upload-file" class="upload-form__label" title="Click to upload"><img src="../../static/logo.png"></label>
   </form>
 </template>
 
