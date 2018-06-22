@@ -4,8 +4,13 @@
     <router-link to="/photo-gallery">Галерея</router-link> -->
     <router-view></router-view>
     <UploadForm/>
-    <PhotoGallery/>
-    <PhotoModal/>
+    <UploadCard></UploadCard>
+    <PhotoGallery 
+      @openPhoto="openPhoto"/>
+    <PhotoModal 
+      v-if="seen" 
+      :photo="activePhoto"
+      @displayModal="displayModal"><img class="photo-modal__img" :src="`/static/${activePhoto}`"></PhotoModal>
   </div>
 </template>
 
@@ -14,12 +19,30 @@ import Vue from "vue";
 import UploadForm from "@/components/UploadForm";
 import PhotoGallery from "@/components/PhotoGallery";
 import PhotoModal from "@/components/PhotoModal";
+import UploadCard from "@/components/UploadCard";
 Vue.component("UploadForm", UploadForm);
+Vue.component("UploadCard", UploadCard);
 Vue.component("PhotoGallery", PhotoGallery);
 Vue.component("PhotoModal", PhotoModal);
 
 export default {
-  name: "App"
+  name: "App",
+  props: ["photo"],
+  data() {
+    return {
+      activePhoto: null,
+      seen: false
+    };
+  },
+  methods: {
+    openPhoto(photo) {
+      this.activePhoto = photo.name;
+      this.displayModal();
+    },
+    displayModal() {
+      this.seen = !this.seen;
+    }
+  }
 };
 </script>
 

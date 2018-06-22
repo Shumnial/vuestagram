@@ -1,6 +1,11 @@
 <template>
-	<a href="" @click.prevent="$emit('openPhoto', photo.name)" class="gallery__photo">
-		<img :src="'/static/' + photo.name" :data-id="photo.id" alt="">
+	<a href="" class="gallery__photo">
+		<button class="gallery__close-btn" @click.prevent="$emit('deletePhoto', photo)">X</button>
+		<img
+			@click.prevent="$emit('openPhoto', photo)"  
+			:src="'/static/' + photo.name" 
+			:data-id="photo.id" 
+			alt=""/>
 	</a>
 </template>
 
@@ -29,9 +34,20 @@ export default {
 	position: relative;
 	display: block;
 	width: 21.25%;
-	background-color: #41b883;
 	margin-right: 5%;
 	margin-bottom: 5%;
+}
+
+.gallery__close-btn {
+	display: none;
+	position: absolute;
+	right: 0;
+	z-index: 1;
+	cursor: pointer;
+}
+
+.gallery__photo:hover .gallery__close-btn {
+	display: block;
 }
 
 .gallery__photo::after {

@@ -1,7 +1,12 @@
 <template>
 	<div class="gallery">
 		<div class="gallery__wrapper">
-			<Photo @openPhoto="openPhoto" v-for="item in photos" :photo="item" :key="item.id"/>
+			<Photo 
+				@openPhoto="$emit('openPhoto', arguments[0])" 
+				@deletePhoto="deletePhoto" 
+				v-for="item in photos" 
+				:photo="item" 
+				:key="item.id"/>
 		</div>
 	</div>
 </template>
@@ -13,28 +18,29 @@ Vue.component("Photo", Photo);
 
 export default {
 	name: "PhotoGallery",
-	props: ["id"],
+	props: [],
 	data() {
 		return {
 			photos: [
 				{
 					name: "logo.png",
-					id: 1
+					id: 0
 				},
 				{
 					name: "img1.jpg",
-					id: 2
+					id: 1
 				},
 				{
 					name: "img2.jpg",
-					id: 3
+					id: 2
 				}
 			]
 		};
 	},
 	methods: {
-		openPhoto(photoName) {
-			console.log("photoName: ", photoName);
+		deletePhoto(photo) {
+			const index = this.photos.findIndex(el => el.name === photo.name);
+			this.photos.splice(index, 1);
 		}
 	}
 };
@@ -49,5 +55,6 @@ export default {
 	background-color: #fff;
 	width: 100%;
 	max-width: 1160px;
+	min-height: 297px;
 }
 </style>

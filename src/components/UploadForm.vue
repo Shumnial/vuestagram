@@ -1,5 +1,5 @@
 <template>
-  <form action="" class="upload-form">
+  <form enctype="multipart/form-data" form="post" class="upload-form">
     <input type="file" id="upload-file" class="upload-form__input" name="filename" required="">
     <label for="upload-file" class="upload-form__label" title="Click to upload"><img src="../../static/logo.png"></label>
   </form>
