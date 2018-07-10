@@ -1,11 +1,16 @@
 <template>
-  <form enctype="multipart/form-data" form="post" class="upload-form">
-    <input type="file" id="upload-file" class="upload-form__input" name="filename" required="">
-    <label for="upload-file" class="upload-form__label" title="Click to upload"><img src="../../static/logo.png"></label>
+  <form enctype="multipart/form-data" method="post" class="upload-form" novalidate="">
+    <input type="file" id="upload-file" class="upload-form__input" name="filename"  required="">
+    <label for="upload-file" class="upload-form__label" title="Click to upload"><img src="../../static/upload.png"
+      @click.prevent="$emit('openForm')"
+      ></label>
+      <slot></slot>
   </form>
 </template>
 
 <script>
+import Vue from "vue";
+
 export default {
   name: "UploadForm",
   data() {
@@ -17,6 +22,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .upload-form {
+  margin-bottom: 40px;
 }
 
 .upload-form__input {
@@ -28,6 +34,8 @@ export default {
 }
 
 .upload-form__label img {
+  width: 100px;
+  height: 100px;
   transition: transform 0.1s;
 }
 

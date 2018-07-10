@@ -1,8 +1,6 @@
 <template>
 	<div class="upload-card">
-		<div class="upload-card__wrapper">
-			<img class="upload-card__photo" src="/static/img2.jpg">
-		</div>
+		<img class="upload-card__photo" src="/static/img2.jpg">
 	</div>
 </template>
 
@@ -19,17 +17,6 @@ export default {
 
 <style type="text/css">
 .upload-card {
-	display: none;
-	width: 100%;
-	height: 100%;
-	position: fixed;
-	top: 0;
-	left: 0;
-	background-color: rgba(0, 0, 0, 0.6);
-	z-index: 1000;
-}
-
-.upload-card__wrapper {
 	max-width: 500px;
 	padding: 30px;
 	position: fixed;
@@ -40,6 +27,7 @@ export default {
 	margin: auto;
 	background-color: #f3f3f3;
 	box-shadow: 0 0 3px 0 black;
+	z-index: 1;
 }
 
 .upload-card__photo {

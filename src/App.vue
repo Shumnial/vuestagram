@@ -3,27 +3,36 @@
     <!-- <router-link to="/upload-form">Форма загрузки</router-link>
     <router-link to="/photo-gallery">Галерея</router-link> -->
     <router-view></router-view>
-    <UploadForm/>
-    <UploadCard></UploadCard>
+    <UploadForm @openForm="openForm">
+      <FormModal 
+        v-if="formSeen" 
+        @displayForm="displayForm"><img class="photo-modal__img" src="/static/img2.jpg">
+      </FormModal>
+    </UploadForm>
     <PhotoGallery 
       @openPhoto="openPhoto"/>
     <PhotoModal 
       v-if="seen" 
       :photo="activePhoto"
-      @displayModal="displayModal"><img class="photo-modal__img" :src="`/static/${activePhoto}`"></PhotoModal>
+      @displayModal="displayModal"><img class="photo-modal__img" :src="`/static/${activePhoto}`">
+    </PhotoModal>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
 import UploadForm from "@/components/UploadForm";
+import FormModal from "@/components/FormModal";
 import PhotoGallery from "@/components/PhotoGallery";
 import PhotoModal from "@/components/PhotoModal";
 import UploadCard from "@/components/UploadCard";
+import Overlay from "@/components/Overlay";
 Vue.component("UploadForm", UploadForm);
+Vue.component("FormModal", FormModal);
 Vue.component("UploadCard", UploadCard);
 Vue.component("PhotoGallery", PhotoGallery);
 Vue.component("PhotoModal", PhotoModal);
+Vue.component("Overlay", Overlay);
 
 export default {
   name: "App",
@@ -31,7 +40,8 @@ export default {
   data() {
     return {
       activePhoto: null,
-      seen: false
+      seen: false,
+      formSeen: false
     };
   },
   methods: {
@@ -41,6 +51,12 @@ export default {
     },
     displayModal() {
       this.seen = !this.seen;
+    },
+    displayForm() {
+      this.formSeen = !this.formSeen;
+    },
+    openForm() {
+      this.displayForm();
     }
   }
 };

@@ -52,9 +52,10 @@ export default {
 	justify-content: space-between;
 	flex-wrap: wrap;
 	margin: 0 auto;
-	background-color: #fff;
+	background-color: #3e3e3b;
 	width: 100%;
 	max-width: 1160px;
 	min-height: 297px;
+	border-radius: 15px;
 }
 </style>

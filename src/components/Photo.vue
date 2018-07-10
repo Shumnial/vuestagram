@@ -36,6 +36,7 @@ export default {
 	width: 21.25%;
 	margin-right: 5%;
 	margin-bottom: 5%;
+	border-radius: 15px;
 }
 
 .gallery__close-btn {
@@ -61,6 +62,7 @@ export default {
 	display: block;
 	width: 100%;
 	height: 100%;
+	border-radius: 15px;
 }
 
 .gallery__photo:nth-child(4n) {
