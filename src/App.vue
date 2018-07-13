@@ -9,7 +9,7 @@
         @displayForm="displayForm"><img class="photo-modal__img" :src="`http://via.placeholder.com/500x400/${getPhotoColor()}`">
       </FormModal>
     </UploadForm>
-    <Preview :file="files[0]"></Preview>
+    <Preview :files="files"></Preview>
     <PhotoGallery @openPhoto="openPhoto"/>
     <PhotoModal 
       v-if="seen" 
@@ -83,7 +83,7 @@ export default {
       const color = Math.floor(Math.random() * (this.colors.length - 1)) + 1;
       return this.colors[color];
     },
-    handleFileSelect(evt) {
+    handleFileSelect() {
       let files = document.querySelector("#upload-file").files;
       console.log("files: ", files);
       for (let i = 0; i < files.length; i++) {

@@ -1,13 +1,20 @@
 <template>
 <div class="preview">
 	<form enctype="multipart/form-data" method="post">
-		<PreviewPhoto></PreviewPhoto>
+		<PreviewPhoto v-for="file in files" :files="files" :file="file"></PreviewPhoto>
 		<button class="preview__btn">Загрузить</button>
 	</form>
 </div>	
 </template>
 
 <script>
+export default {
+	name: "Preview",
+	props: ["files"],
+	data() {
+		return {};
+	}
+};
 </script>
 
 <style type="text/css">

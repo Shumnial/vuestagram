@@ -2,11 +2,12 @@
   <form enctype="multipart/form-data" method="post" class="upload-form" novalidate="">
     <input 
     type="file" 
-    multiple
     id="upload-file" 
     class="upload-form__input" 
     name="filename" 
-    required=""
+    required
+    multiple
+    accept="image/jpeg,image/png,image/gif"
     @change="$emit('handleFileSelect')">
     <p class="upload-form__text">Drop your files here</p>
 <!--   <label for="upload-file" class="upload-form__label" title="Click to upload"><img src="../../static/upload.png"></label>-->
