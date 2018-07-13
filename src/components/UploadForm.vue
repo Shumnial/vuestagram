@@ -1,9 +1,15 @@
 <template>
   <form enctype="multipart/form-data" method="post" class="upload-form" novalidate="">
-    <input type="file" id="upload-file" class="upload-form__input" name="filename"  required="">
-    <label for="upload-file" class="upload-form__label" title="Click to upload"><img src="../../static/upload.png"
-      @click.prevent="$emit('openForm')"
-      ></label>
+    <input 
+    type="file" 
+    multiple
+    id="upload-file" 
+    class="upload-form__input" 
+    name="filename" 
+    required=""
+    @change="$emit('handleFileSelect')">
+    <p class="upload-form__text">Drop your files here</p>
+<!--   <label for="upload-file" class="upload-form__label" title="Click to upload"><img src="../../static/upload.png"></label>-->
       <slot></slot>
   </form>
 </template>
@@ -22,11 +28,40 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .upload-form {
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+  background-color: #fff;
+  margin: 0 auto;
   margin-bottom: 40px;
+  max-width: 1160px;
+  border-radius: 15px;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-form::before {
+  position: absolute;
+  content: "";
+  width: 96%;
+  height: 80%;
+  border: 2px dashed gray;
+}
+
+.upload-form__text {
+  color: black;
 }
 
 .upload-form__input {
-  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .upload-form__label {

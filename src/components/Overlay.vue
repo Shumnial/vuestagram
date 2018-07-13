@@ -1,5 +1,5 @@
 <template>
-	<div class="overlay"><slot></slot></div>
+	<div class="overlay" @click="$emit('displayModal')"><slot></slot></div>
 </template>
 
 <script type="text/javascript">

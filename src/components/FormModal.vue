@@ -1,8 +1,8 @@
 <template>
-	<Overlay @click="$emit('displayForm')">
+	<Overlay>
 		<div class="form-modal">
-			<img src="/static/img2.jpg">
-			<button class="form-modal__close" type="">CLOSE ME!</button>
+			<slot></slot>
+			<button class="form-modal__close" type="button" @click="$emit('displayForm')">CLOSE ME!</button>
 			<div class="form-modal__fields">
 				<input class="form-modal__field" type="text" name="hashtags" placeholder="#хэштег">
 				<textarea class="form-modal__field form-modal__field--descr" name="descr" placeholder="Description"></textarea>
@@ -34,7 +34,6 @@ export default {
 	right: 0;
 	margin: auto;
 	background-color: transparent;
-	box-shadow: 0 0 3px 0 black;
 }
 
 .form-modal img {

@@ -6,21 +6,20 @@
 				@deletePhoto="deletePhoto" 
 				v-for="item in photos" 
 				:photo="item" 
-				:key="item.id"/>
+				:key="item.id"
+				:title="date"/>
 		</div>
 	</div>
 </template>
 
 <script>
 import Vue from "vue";
-import Photo from "@/components/Photo";
-Vue.component("Photo", Photo);
 
 export default {
 	name: "PhotoGallery",
-	props: [],
 	data() {
 		return {
+			date: new Date(),
 			photos: [
 				{
 					name: "logo.png",

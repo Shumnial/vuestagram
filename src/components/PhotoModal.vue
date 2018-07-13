@@ -9,7 +9,6 @@
 
 <script>
 import Vue from "vue";
-import Overlay from "@/components/Overlay";
 
 export default {
 	name: "PhotoModal",
