@@ -8,10 +8,9 @@
     required
     multiple
     accept="image/jpeg,image/png,image/gif"
-    @change="$emit('handleFileSelect')">
+    @change="$emit('handleFileSelect', $event)">
     <p class="upload-form__text">Drop your files here</p>
-<!--   <label for="upload-file" class="upload-form__label" title="Click to upload"><img src="../../static/upload.png"></label>-->
-      <slot></slot>
+    <slot></slot>
   </form>
 </template>
 
@@ -31,7 +30,6 @@ export default {
 .upload-form {
   position: relative;
   width: 100%;
-  min-height: 200px;
   background-color: #fff;
   margin: 0 auto;
   margin-bottom: 40px;
@@ -41,11 +39,18 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 7.5% 5%;
+  box-sizing: border-box;
 }
 
 .upload-form::before {
   position: absolute;
   content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
   width: 96%;
   height: 80%;
   border: 2px dashed gray;

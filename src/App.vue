@@ -4,13 +4,9 @@
     <router-link to="/photo-gallery">Галерея</router-link> -->
     <router-view></router-view>
     <UploadForm @handleFileSelect="handleFileSelect">
-      <FormModal 
-        v-if="formSeen" 
-        @displayForm="displayForm"><img class="photo-modal__img" :src="`http://via.placeholder.com/500x400/${getPhotoColor()}`">
-      </FormModal>
     </UploadForm>
-    <Preview :files="files"></Preview>
-    <PhotoGallery @openPhoto="openPhoto"/>
+    <Preview :previewFiles="previewFiles"></Preview>
+    <PhotoGallery :previewFiles="previewFiles" @openPhoto="openPhoto"/>
     <PhotoModal 
       v-if="seen" 
       :photo="activePhoto"
@@ -46,49 +42,33 @@ export default {
   data() {
     return {
       activePhoto: null,
-      files: [],
+      previewFiles: [],
       src: null,
-      seen: false,
-      formSeen: false,
-      colors: [
-        "ff5800",
-        "22af6b",
-        "51b0d4",
-        "364c95",
-        "8b38d1",
-        "d98ee2",
-        "e1306a",
-        "e3d42f",
-        "e5a638",
-        "b61a0e",
-        "f8f8f8"
-      ]
+      seen: false
     };
   },
   methods: {
-    openPhoto(photo) {
+    openPhoto (photo) {
       this.activePhoto = photo.name;
       this.displayModal();
     },
-    displayModal() {
+    displayModal () {
       this.seen = !this.seen;
     },
-    displayForm() {
-      this.formSeen = !this.formSeen;
-    },
-    openForm() {
+    openForm () {
       this.displayForm();
     },
-    getPhotoColor() {
-      const color = Math.floor(Math.random() * (this.colors.length - 1)) + 1;
-      return this.colors[color];
-    },
-    handleFileSelect() {
-      let files = document.querySelector("#upload-file").files;
-      console.log("files: ", files);
+    handleFileSelect (evt) {
+      const target = evt.currentTarget;
+      const files = target.files;
       for (let i = 0; i < files.length; i++) {
-        this.files.push(files[i].name);
+        let reader = new FileReader();
+        reader.onload = () => {
+          this.previewFiles.push(reader.result); 
+        }
+        reader.readAsDataURL(files[i]);
       }
+      target.value = '';
     }
   }
 };

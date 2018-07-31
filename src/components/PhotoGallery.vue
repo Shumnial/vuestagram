@@ -1,13 +1,15 @@
 <template>
 	<div class="gallery">
 		<div class="gallery__wrapper">
-			<Photo 
-				@openPhoto="$emit('openPhoto', arguments[0])" 
-				@deletePhoto="deletePhoto" 
-				v-for="item in photos" 
-				:photo="item" 
-				:key="item.id"
-				:title="date"/>
+			<Photo
+			@uploadPhotos="uploadPhotos"
+			@openPhoto="$emit('openPhoto', arguments[0])" 
+			@deletePhoto="deletePhoto" 
+			v-for="item in photos" 
+			:photo="item" 
+			:key="item.id"
+			:title="date"
+			/>
 		</div>
 	</div>
 </template>
@@ -17,6 +19,7 @@ import Vue from "vue";
 
 export default {
 	name: "PhotoGallery",
+	props: ["previewFiles"],
 	data() {
 		return {
 			date: new Date(),
@@ -34,10 +37,14 @@ export default {
 					id: 2
 				}
 			]
-		};
+		}
 	},
 	methods: {
-		deletePhoto(photo) {
+		uploadPhotos (previewFiles) {
+			console.log("1: ", 1);
+      this.photos.concat(previewFiles);
+    },
+		deletePhoto (photo) {
 			const index = this.photos.findIndex(el => el.name === photo.name);
 			this.photos.splice(index, 1);
 		}
@@ -54,7 +61,16 @@ export default {
 	background-color: #3e3e3b;
 	width: 100%;
 	max-width: 1160px;
-	min-height: 297px;
 	border-radius: 15px;
 }
+.gallery__wrapper {
+	width: 100%;
+	display: flex;
+	align-items: baseline;
+	align-content: space-between;
+	flex-wrap: wrap;
+	padding: 2.5%;
+	padding-bottom: 0;
+}
+
 </style>

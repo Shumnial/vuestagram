@@ -20,22 +20,13 @@ export default {
 </script>
 
 <style type="text/css">
-.gallery__wrapper {
-	width: 100%;
-	display: flex;
-	align-items: baseline;
-	align-content: space-between;
-	flex-wrap: wrap;
-	padding: 5%;
-	padding-bottom: 0;
-}
-
 .gallery__photo {
 	position: relative;
 	display: block;
 	width: 21.25%;
-	margin-right: 5%;
-	margin-bottom: 5%;
+	margin-left: 2.5%;
+	margin-right: 2.5%;
+	margin-bottom: 2.5%;
 	border-radius: 15px;
 }
 
