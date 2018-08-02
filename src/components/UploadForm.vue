@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import Vue from "vue";
 
 export default {
   name: "UploadForm",
@@ -39,7 +38,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 7.5% 5%;
+  padding: 5%;
   box-sizing: border-box;
 }
 
@@ -58,6 +57,11 @@ export default {
 
 .upload-form__text {
   color: black;
+  transition: transform 0.3s;
+}
+
+.upload-form:hover .upload-form__text {
+  transform: scale(1.2);
 }
 
 .upload-form__input {
@@ -68,6 +72,7 @@ export default {
   height: 100%;
   opacity: 0;
   cursor: pointer;
+  z-index: 1;
 }
 
 .upload-form__label {
@@ -77,10 +82,25 @@ export default {
 .upload-form__label img {
   width: 100px;
   height: 100px;
-  transition: transform 0.1s;
+  transition: transform 0.3s;
 }
 
 .upload-form__label:hover img {
   transform: scale(1.1);
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(10deg);
+  }
+  33% {
+    transform: rotate(0deg);
+  }
+  66% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 </style>

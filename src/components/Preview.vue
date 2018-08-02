@@ -1,22 +1,29 @@
 <template>
-<div class="preview">
-	<form class="preview__form" enctype="multipart/form-data" method="post">
-		<div class="preview__list">
-			<PreviewPhoto
-			v-for="file in previewFiles"
-			:file="file">
-			</PreviewPhoto>
-		</div>
-		<button 
-		class="preview__upload"
-		@click.prevent="$emit('uploadPhotos', previewFiles)"
-		>Загрузить</button>
-	</form>
-</div>	
+<transition name="fade">
+	<div class="preview">
+		<form class="preview__form" enctype="multipart/form-data" method="post">
+			<div class="preview__list">
+				<PreviewPhoto
+				@openPreviewCard="$emit('openPreviewCard', arguments[0])"
+				@deletePreview="$emit('deletePreview', arguments[0])"
+				v-for="file in previewFiles"
+				:file="file">
+				</PreviewPhoto>
+			</div>
+			<button 
+			class="preview__btn preview__btn--upload"
+			@click.prevent="$emit('uploadPhotos')"
+			>Загрузить</button>
+			<button 
+			class="preview__btn"
+			@click.prevent="$emit('deleteAllPreview')"
+			>Очистить</button>
+		</form>
+	</div>
+</transition>	
 </template>
 
 <script>
-import Vue from "vue";
 
 export default {
 	name: "Preview",
@@ -29,9 +36,8 @@ export default {
 
 <style type="text/css">
 .preview {
-	min-height: 200px;
 	position: relative;
-	background-color: #ababab;
+	background-color: #dedede;
 	border-radius: 15px;
 	max-width: 1160px;
 	margin: 0 auto;
@@ -41,7 +47,6 @@ export default {
 }
 
 .preview__list {
-	min-height: 140px;
 	display: flex;
 	flex-wrap: wrap;
 	margin-bottom: 20px;
@@ -51,11 +56,15 @@ export default {
 
 }
 
-.preview__upload {
+.preview__btn {
 	padding: 10px 25px;
 	border: none;
 	background-color: #fff;
 	border-radius: 5px;
 	cursor: pointer;
+}
+
+.preview__btn--upload {
+	margin-right: 15px;
 }
 </style>

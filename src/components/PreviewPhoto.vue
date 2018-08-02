@@ -1,9 +1,17 @@
 <template>
-	<span class="preview__photo"><img :src="file"></span>
+	<transition name="fade">
+		<span class="preview__photo">
+			<img 
+			:src="file.name" 
+			@click="$emit('openPreviewCard', file)">
+			<button 
+			class="preview__close-btn"
+			@click.prevent="$emit('deletePreview', file)">X</button>
+		</span>
+	</transition>
 </template>
 
 <script type="text/javascript">
-import Vue from "vue";
 
 export default {
 	name: "PreviewPhoto",
@@ -23,19 +31,27 @@ export default {
   margin-left: 2.5%;
   margin-bottom: 5%;
   border-radius: 15px;
+  cursor: pointer;
 }
 
 .preview__photo img {
 	position: absolute;
 	left: 0;
 	top: 0;
-	max-width: 100%;
-	height: auto;
+	width: 100%;
+	height: 100%;
 }
 
 .preview__photo::after {
 	content: "";
   display: block;
-  padding-bottom: 50%;
+  padding-bottom: 60%;
+}
+
+.preview__close-btn {
+	position: absolute;
+	right: 0;
+	top: 0;
+	cursor: pointer;
 }
 </style>

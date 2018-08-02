@@ -5,42 +5,64 @@
     <router-view></router-view>
     <UploadForm @handleFileSelect="handleFileSelect">
     </UploadForm>
-    <Preview :previewFiles="previewFiles"></Preview>
-    <PhotoGallery :previewFiles="previewFiles" @openPhoto="openPhoto"/>
-    <PhotoModal 
+    <Preview 
+    v-if="previewFiles.length > 0"
+    :previewFiles="previewFiles"
+    @openPreviewCard="openPreviewCard"
+    @uploadPhotos="uploadPhotos" 
+    @deletePreview="deletePreview"
+    @deleteAllPreview="deleteAllPreview">
+    </Preview>
+    <Gallery
+    v-if="photos.length > 0"
+    :photos="photos" 
+    @openPhoto="openPhoto" 
+    @deletePhoto="deletePhoto">
+    </Gallery>
+    <GalleryModal 
       v-if="seen" 
       :photo="activePhoto"
-      @displayModal="displayModal"><img class="photo-modal__img" :src="`/static/${activePhoto}`">
-    </PhotoModal>
+      @displayModal="displayModal"><img class="photo-modal__img" :src="`${activePhoto}`">
+    </GalleryModal>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
 import UploadForm from "@/components/UploadForm";
-import FormModal from "@/components/FormModal";
-import PhotoGallery from "@/components/PhotoGallery";
-import Photo from "@/components/Photo";
-import PhotoModal from "@/components/PhotoModal";
-import UploadCard from "@/components/UploadCard";
+import Gallery from "@/components/Gallery";
+import GalleryPhoto from "@/components/GalleryPhoto";
+import GalleryModal from "@/components/GalleryModal";
 import Preview from "@/components/Preview";
 import PreviewPhoto from "@/components/PreviewPhoto";
 import Overlay from "@/components/Overlay";
 Vue.component("UploadForm", UploadForm);
-Vue.component("FormModal", FormModal);
-Vue.component("UploadCard", UploadCard);
-Vue.component("PhotoGallery", PhotoGallery);
-Vue.component("Photo", Photo);
-Vue.component("PhotoModal", PhotoModal);
+Vue.component("Gallery", Gallery);
+Vue.component("GalleryPhoto", GalleryPhoto);
+Vue.component("GalleryModal", GalleryModal);
 Vue.component("Preview", Preview);
 Vue.component("PreviewPhoto", PreviewPhoto);
 Vue.component("Overlay", Overlay);
 
 export default {
   name: "App",
-  props: ["photo"],
+  props: [],
   data() {
     return {
+      photos: [
+        {
+          name: "/static/img1.jpg",
+          id: 0
+        },
+        {
+          name: "/static/img2.jpg",
+          id: 1
+        },
+        {
+          name: "/static/img3.jpg",
+          id: 2
+        }
+      ],
       activePhoto: null,
       previewFiles: [],
       src: null,
@@ -48,15 +70,31 @@ export default {
     };
   },
   methods: {
+    displayModal () {
+      this.seen = !this.seen;
+    },
     openPhoto (photo) {
       this.activePhoto = photo.name;
       this.displayModal();
     },
-    displayModal () {
-      this.seen = !this.seen;
+    uploadPhotos () {
+      this.photos = this.photos.concat(this.previewFiles);
+      this.previewFiles = [];
     },
-    openForm () {
-      this.displayForm();
+    deletePhoto (photo) {
+      const index = this.photos.findIndex(el => el.name === photo.name);
+      this.photos.splice(index, 1);
+    },
+    openPreviewCard (file) {
+      this.activePhoto = file.name;
+      this.displayModal();
+    },
+    deletePreview (file) {
+      const index = this.previewFiles.findIndex(el => el.name === file.name)
+      this.previewFiles.splice(index, 1);
+    },
+    deleteAllPreview () {
+      this.previewFiles = [];
     },
     handleFileSelect (evt) {
       const target = evt.currentTarget;
@@ -64,7 +102,7 @@ export default {
       for (let i = 0; i < files.length; i++) {
         let reader = new FileReader();
         reader.onload = () => {
-          this.previewFiles.push(reader.result); 
+          this.previewFiles.push({'name': reader.result}); 
         }
         reader.readAsDataURL(files[i]);
       }
@@ -91,5 +129,14 @@ body {
 
 a {
   color: #fff;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
