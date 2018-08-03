@@ -8,22 +8,27 @@
     <Preview 
     v-if="previewFiles.length > 0"
     :previewFiles="previewFiles"
-    @openPreviewCard="openPreviewCard"
+    @openPreviewFilters="openPreviewFilters"
     @uploadPhotos="uploadPhotos" 
     @deletePreview="deletePreview"
     @deleteAllPreview="deleteAllPreview">
     </Preview>
     <Gallery
     v-if="photos.length > 0"
-    :photos="photos" 
+    :photos="photos"
     @openPhoto="openPhoto" 
     @deletePhoto="deletePhoto">
     </Gallery>
+    <PreviewFilters 
+    v-if="filtersSeen"
+    :file="activePreview"
+    @displayPreviewFilters="displayPreviewFilters"
+    @onPreviewFormSubmit="onPreviewFormSubmit"
+    />
     <GalleryModal 
       v-if="seen" 
       :photo="activePhoto"
-      @displayModal="displayModal"><img class="photo-modal__img" :src="`${activePhoto}`">
-    </GalleryModal>
+      @displayModal="displayModal"/>
   </div>
 </template>
 
@@ -35,6 +40,7 @@ import GalleryPhoto from "@/components/GalleryPhoto";
 import GalleryModal from "@/components/GalleryModal";
 import Preview from "@/components/Preview";
 import PreviewPhoto from "@/components/PreviewPhoto";
+import PreviewFilters from "@/components/PreviewFilters";
 import Overlay from "@/components/Overlay";
 Vue.component("UploadForm", UploadForm);
 Vue.component("Gallery", Gallery);
@@ -42,6 +48,7 @@ Vue.component("GalleryPhoto", GalleryPhoto);
 Vue.component("GalleryModal", GalleryModal);
 Vue.component("Preview", Preview);
 Vue.component("PreviewPhoto", PreviewPhoto);
+Vue.component("PreviewFilters", PreviewFilters);
 Vue.component("Overlay", Overlay);
 
 export default {
@@ -52,21 +59,21 @@ export default {
       photos: [
         {
           name: "/static/img1.jpg",
+          descr: "Зимний Екатеринбург",
           id: 0
         },
         {
           name: "/static/img2.jpg",
-          id: 1
-        },
-        {
-          name: "/static/img3.jpg",
-          id: 2
+          id: 1,
+          descr: "Вечерний Екатеринбург"
         }
       ],
       activePhoto: null,
+      activePreview: null,
       previewFiles: [],
       src: null,
-      seen: false
+      seen: false,
+      filtersSeen: false
     };
   },
   methods: {
@@ -74,7 +81,7 @@ export default {
       this.seen = !this.seen;
     },
     openPhoto (photo) {
-      this.activePhoto = photo.name;
+      this.activePhoto = photo;
       this.displayModal();
     },
     uploadPhotos () {
@@ -85,9 +92,13 @@ export default {
       const index = this.photos.findIndex(el => el.name === photo.name);
       this.photos.splice(index, 1);
     },
-    openPreviewCard (file) {
-      this.activePhoto = file.name;
-      this.displayModal();
+    displayPreviewFilters () {
+      this.filtersSeen = !this.filtersSeen;
+    },
+    openPreviewFilters (file) {
+      console.log("file: ", file);
+      this.activePreview = file;
+      this.displayPreviewFilters();
     },
     deletePreview (file) {
       const index = this.previewFiles.findIndex(el => el.name === file.name)
@@ -95,6 +106,13 @@ export default {
     },
     deleteAllPreview () {
       this.previewFiles = [];
+    },
+    onPreviewFormSubmit (file) {
+      console.log("file: ", file);
+      const index = this.previewFiles.findIndex(el => el.name === file.name);
+      this.previewFiles[index].descr = file.descr;
+      this.activePreview = this.previewFiles[index];
+      this.displayPreviewFilters();
     },
     handleFileSelect (evt) {
       const target = evt.currentTarget;

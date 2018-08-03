@@ -3,7 +3,7 @@
 		<span class="preview__photo">
 			<img 
 			:src="file.name" 
-			@click="$emit('openPreviewCard', file)">
+			@click="$emit('openPreviewFilters', file)">
 			<button 
 			class="preview__close-btn"
 			@click.prevent="$emit('deletePreview', file)">X</button>
@@ -29,7 +29,7 @@ export default {
   width: 15%;
   margin-right: 2.5%;
   margin-left: 2.5%;
-  margin-bottom: 5%;
+  margin-bottom: 2.5%;
   border-radius: 15px;
   cursor: pointer;
 }

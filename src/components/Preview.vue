@@ -4,7 +4,7 @@
 		<form class="preview__form" enctype="multipart/form-data" method="post">
 			<div class="preview__list">
 				<PreviewPhoto
-				@openPreviewCard="$emit('openPreviewCard', arguments[0])"
+				@openPreviewFilters="$emit('openPreviewFilters', arguments[0])"
 				@deletePreview="$emit('deletePreview', arguments[0])"
 				v-for="file in previewFiles"
 				:file="file">
