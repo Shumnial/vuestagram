@@ -13,7 +13,7 @@
 			<button 
 			class="preview__btn preview__btn--upload"
 			@click.prevent="$emit('uploadPhotos')"
-			>Загрузить</button>
+			>Загрузить ({{ previewFiles.length }})</button>
 			<button 
 			class="preview__btn"
 			@click.prevent="$emit('deleteAllPreview')"
@@ -49,7 +49,6 @@ export default {
 .preview__list {
 	display: flex;
 	flex-wrap: wrap;
-	margin-bottom: 20px;
 }
 
 .preview__item {

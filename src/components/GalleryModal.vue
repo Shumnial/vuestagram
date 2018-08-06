@@ -1,6 +1,7 @@
 <template>
 	<transition name="fade">
-		<Overlay>
+		<div>
+			 <div  class="overlay" @click="$emit('displayModal')"></div>
 		  <div class="photo-modal">
 		  	<div class="photo-modal__wrapper">
 		  		<div class="photo-modal__col photo-modal__col--left">
@@ -12,7 +13,7 @@
 		  		<button class="photo-modal__close" @click="$emit('displayModal')">X</button>
 		  	</div>
 		  </div>
-		</Overlay>
+		</div>
 	</transition>
 </template>
 
@@ -38,29 +39,31 @@ export default {
 	background-color: #fff;
 	z-index: 1000;
 	background-color: transparent;
+	max-width: 50%;
 }
 
 .photo-modal__wrapper {
 	display: flex;
 	justify-content: center;
 	position: relative;
-	padding: 2% 2.5%;
-	max-width: 100%;
+	margin: 0 auto;
 }
 
 .photo-modal__col--left {
-	width: 50%;
+	width: 65%;
+	box-sizing: border-box;
 }
 
 .photo-modal__col--right {
-	width: 25%;
+	width: 35%;
 	background-color: #fff;
 	opacity: 0.95;
-	padding: 20px;
+	padding: 30px 20px;
 	box-sizing: border-box;
 }
 
 .photo-modal__img {
+	display: block;
 	max-width: 100%;
 	height: auto;
 }
@@ -73,8 +76,8 @@ export default {
 
 .photo-modal__close {
 	position: absolute;
-	top: 0;
-	right: 11.5%;
+	top: -25px;
+	right: -30px;
 	cursor: pointer;
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
 	<transition name="fade">
-		<Overlay>
+		<div>
+			<div class="overlay" @click.prevent="$emit('displayPreviewFilters')"></div>
 		  <form class="preview-filters" method="post" enctype="multipart/form-data" action="#" @submit.prevent="$emit('onPreviewFormSubmit', file)">
 		  	<div class="preview-filters__wrapper">
 		  		<img class="preview-filters__img" :src="file.name">
@@ -22,7 +23,7 @@
 		  		<button class="preview-filters__btn preview-filters__btn--close" @click.prevent="$emit('displayPreviewFilters')">X</button>
 		  	</div>
 		  </form>
-		</Overlay>
+		</div>
 	</transition>
 </template>
 
@@ -47,13 +48,12 @@
 	background-color: #fff;
 	z-index: 1000;
 	background-color: transparent;
+	max-width: 30%;
 }
 
 .preview-filters__wrapper {
 	position: relative;
 	display: inline-block;
-	padding: 2% 2.5%;
-	max-width: 50%;
 }
 
 .preview-filters__img {
@@ -68,8 +68,8 @@
 
 .preview-filters__btn--close {
 	position: absolute;
-	top: 0;
-	right: 0;
+	top: -25px;
+	right: -30px;
 	cursor: pointer;
 }
 

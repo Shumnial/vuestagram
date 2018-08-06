@@ -68,9 +68,9 @@ export default {
           descr: "Вечерний Екатеринбург"
         }
       ],
+      previewFiles: [],
       activePhoto: null,
       activePreview: null,
-      previewFiles: [],
       src: null,
       seen: false,
       filtersSeen: false
@@ -117,6 +117,7 @@ export default {
     handleFileSelect (evt) {
       const target = evt.currentTarget;
       const files = target.files;
+      console.log("files: ", files);
       for (let i = 0; i < files.length; i++) {
         let reader = new FileReader();
         reader.onload = () => {
@@ -147,6 +148,16 @@ body {
 
 a {
   color: #fff;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
 }
 
 .fade-enter-active, .fade-leave-active {

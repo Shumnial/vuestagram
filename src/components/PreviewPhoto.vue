@@ -26,9 +26,9 @@ export default {
 .preview__photo {
 	position: relative;
   display: block;
-  width: 15%;
-  margin-right: 2.5%;
-  margin-left: 2.5%;
+  width: 14%;
+  margin-right: 1.25%;
+  margin-left: 1.25%;
   margin-bottom: 2.5%;
   border-radius: 15px;
   cursor: pointer;

@@ -50,7 +50,6 @@ export default {
 }
 
 .gallery__photo img {
-	
 	display: block;
 	max-width: 100%;
 	height: auto;
