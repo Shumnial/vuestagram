@@ -34,6 +34,7 @@
 
 <script>
 import Vue from "vue";
+import {mapState, mapGetters} from "vuex";
 import UploadForm from "@/components/UploadForm";
 import Gallery from "@/components/Gallery";
 import GalleryPhoto from "@/components/GalleryPhoto";
@@ -41,7 +42,6 @@ import GalleryModal from "@/components/GalleryModal";
 import Preview from "@/components/Preview";
 import PreviewPhoto from "@/components/PreviewPhoto";
 import PreviewFilters from "@/components/PreviewFilters";
-import Overlay from "@/components/Overlay";
 Vue.component("UploadForm", UploadForm);
 Vue.component("Gallery", Gallery);
 Vue.component("GalleryPhoto", GalleryPhoto);
@@ -49,83 +49,69 @@ Vue.component("GalleryModal", GalleryModal);
 Vue.component("Preview", Preview);
 Vue.component("PreviewPhoto", PreviewPhoto);
 Vue.component("PreviewFilters", PreviewFilters);
-Vue.component("Overlay", Overlay);
 
 export default {
   name: "App",
   props: [],
   data() {
     return {
-      photos: [
-        {
-          name: "/static/img1.jpg",
-          descr: "Зимний Екатеринбург",
-          id: 0
-        },
-        {
-          name: "/static/img2.jpg",
-          id: 1,
-          descr: "Вечерний Екатеринбург"
-        }
-      ],
       previewFiles: [],
-      activePhoto: null,
       activePreview: null,
-      src: null,
-      seen: false,
       filtersSeen: false
     };
   },
+  computed: {
+    ...mapState([
+      'photos',
+      'activePhoto',
+      'seen',
+      ])
+  },
   methods: {
     displayModal () {
-      this.seen = !this.seen;
+      this.$store.commit('displayModal');
     },
     openPhoto (photo) {
-      this.activePhoto = photo;
-      this.displayModal();
+      this.$store.commit('openPhoto', photo);
     },
     uploadPhotos () {
-      this.photos = this.photos.concat(this.previewFiles);
+      this.$store.commit('uploadPhotos', this.previewFiles);
       this.previewFiles = [];
     },
     deletePhoto (photo) {
-      const index = this.photos.findIndex(el => el.name === photo.name);
-      this.photos.splice(index, 1);
+      this.$store.commit('deletePhoto', photo);
     },
     displayPreviewFilters () {
       this.filtersSeen = !this.filtersSeen;
     },
     openPreviewFilters (file) {
-      console.log("file: ", file);
       this.activePreview = file;
       this.displayPreviewFilters();
     },
     deletePreview (file) {
-      const index = this.previewFiles.findIndex(el => el.name === file.name)
+      const index = this.previewFiles.findIndex(el => el.name === file.name);
       this.previewFiles.splice(index, 1);
     },
     deleteAllPreview () {
       this.previewFiles = [];
     },
     onPreviewFormSubmit (file) {
-      console.log("file: ", file);
       const index = this.previewFiles.findIndex(el => el.name === file.name);
       this.previewFiles[index].descr = file.descr;
       this.activePreview = this.previewFiles[index];
-      this.displayPreviewFilters();
+      this.filtersSeen = !this.filtersSeen;
     },
     handleFileSelect (evt) {
       const target = evt.currentTarget;
       const files = target.files;
-      console.log("files: ", files);
       for (let i = 0; i < files.length; i++) {
         let reader = new FileReader();
         reader.onload = () => {
-          this.previewFiles.push({'name': reader.result}); 
-        }
+          this.previewFiles.push({'name': reader.result});
+        };
         reader.readAsDataURL(files[i]);
       }
-      target.value = '';
+      target.value = "";
     }
   }
 };

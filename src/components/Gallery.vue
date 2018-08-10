@@ -6,7 +6,6 @@
 			@deletePhoto="$emit('deletePhoto', arguments[0])"
 			v-for="item in photos"
 			:photo="item"
-			:key="item.id"
 			:title="date"
 			/>
 		</div>
@@ -16,11 +15,12 @@
 <script>
 
 export default {
+	
 	name: "Gallery",
 	props: ["photos"],
 	data() {
 		return {
-			date: new Date(),
+			date: new Date()
 		}
 	}
 };
